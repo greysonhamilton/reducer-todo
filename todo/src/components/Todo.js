@@ -6,9 +6,10 @@ const Todo = (props) => {
 
     return (
 
-        <div>
-            <h2 style={this.props.completed ? { textDecoration: 'line-through' } : null} onClick={() => this.props.markComplete}></h2>
-        </div>
+        <li className={`task${completed}`}
+            onClick={() => checkOffTask(id)}>
+            {task}
+        </li>
        
     )
 

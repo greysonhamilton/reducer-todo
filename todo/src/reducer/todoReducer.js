@@ -3,7 +3,7 @@ export const initialState = [
     {
         item: '',
         completed: false,
-        id: ''
+        id: '111111'
     }
 ]
 
@@ -15,7 +15,7 @@ export const todoReducer = (state, action) => {
             {
                 item: action.payload,
                 completed: false,
-                id: newDate()
+                id: new Date()
             }]
 
         case ('COMPLETE_TASK'):
