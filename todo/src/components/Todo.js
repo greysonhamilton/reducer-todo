@@ -1,23 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Todo extends Component {
+const Todo = (props) => {
 
-    constructor(props) {
-        super();
+    const {id, task, completed, checkOffTask} = props;
 
-    }
+    return (
 
-    render() {
-
-        return (
-
-            <div>
-                <h2 style={this.props.completed ? { textDecoration: 'line-through' } : null} onClick={() => this.props.markComplete}></h2>
-            </div>
+        <div>
+            <h2 style={this.props.completed ? { textDecoration: 'line-through' } : null} onClick={() => this.props.markComplete}></h2>
+        </div>
        
-        )
-
-    }
+    )
 
 }
 

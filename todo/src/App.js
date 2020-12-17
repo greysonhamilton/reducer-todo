@@ -1,76 +1,54 @@
-import React from 'react';
-import List from './components/TodoList';
-import Form from './components/TodoForm';
-import './components/Todo.css';
+import React, { useState, useReducer} from 'react';
+import TodoList from './components/TodoList';
 import TodoForm from './components/TodoForm';
+import { initialState, todoReducer } from '../src/reducer/todoReducer';
 
-class App extends React.Component {
+const App = () => {
 
-  constructor() {
-    super();
+  const [state, dispatch] = useReducer(todoReducer, initialState);
+  const [newTask, changeTask] = useState('');
 
-    this.state = {
-      todoList: [
-        {
-          id: 1,
-          item: 'Make coffee',
-          completed: false
-        },
-        {
-          id: 2,
-          item: 'Prepare lunch',
-          completed: false
-        },
-        {
-          id: 3,
-          item: 'Leave for work',
-          completed: false
-        }
-      ],
-    }
+  const handleChange = (e) => {
+
+    changeTask(e.target.value);
 
   }
-  
-  // you will need a place to store your state in this component.
-  // design `App` to be the parent component of your application.
-  // this component is going to take care of state, and any change handlers you need to work with your state
 
-  addToDo = (item)
-  submit = e => {
-    e.preventDefault();
-    this.addItem({ task: this.state.text, id: Date.now(), completed: false });
-    this.setState({ item: '' });
+  const completeTask = (id) => {
+    
+    dispatch({type: 'COMPLETE_TASK', payload: id})
 
-}
+  }
 
-handleChange = e => {
-    this.setState({ ...this.state,
-      item: e.target.value });
+  const filterComplete = () => {
 
-}
+    dispatch({type: 'FILTER_COMPLETE'})
 
-  render() {
+  }
 
-    return (
+  return (
 
-      <div className="App">
+    <div className="App">
         
-        <h2>Welcome to your Todo App!</h2>
-        <TodoForm
-          handleChange={this.handleChange}
-          removeItem={this.removeItem}
-        />
-        <TodoList 
-          addItem = {this.addItem}
-          todoList = {this.state.todoList}
-         />
+      <h2>Welcome to your Todo App!</h2>
+      <button onClick = {filterComplete}>Clear Completed Tasks</button>
 
-      </div>
+      <TodoList 
+        list={state}
+        completeTask={completeTask}
+       />
+
+      <TodoForm
+        input = {newTask}
+        handleChange = {handleChange}
+        dispatch = {dispatch}
+        changeTask = {changeTask}
+       />
+        
+    </div>
 
     );
 
   }
-
-}
 
 export default App
